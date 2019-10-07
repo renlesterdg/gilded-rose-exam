@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/renlesterdg/gilded-rose-exam.svg?branch=master)](https://travis-ci.org/renlesterdg/gilded-rose-exam)
+
 ### Setup
 
 1. Install Ruby
