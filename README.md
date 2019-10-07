@@ -4,12 +4,11 @@
 
 1. Install Ruby
 2. Install Bundler `gem install bundler`
-3. Run `bundle install` This will install all dependencies for our test runner, rspec.
-4. Run `bundle exec rspec` This will run all unit tests, Please ensure all tests are green.
-5. Fork this repository using your github account.
-6. Create a local branch from your fork.
+3. Fork this repository using your github account.
+4. Create a local branch from your fork.
+5. Run `bundle install` This will install all dependencies for our test runner, rspec.
+6. Run `bundle exec rspec` or `rake` This will run all unit tests, Please ensure all tests are green.
 7. When you are done, Please open a pull request from your local branch to my main branch.
-
 
 If you have any question or clarification about the code. Please create an issue on the main repo and tag me @renlesterdg
 
