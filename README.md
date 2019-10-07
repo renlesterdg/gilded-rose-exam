@@ -14,7 +14,7 @@ If you have any question or clarification about the code. Please create an issue
 
 ### What do we expect?
 
-1. Please make multiple commits with good commit message. Do not show final code change in a single commit. Show us your best code and the steps you take to refactor this code.
+1. Please make multiple commits with good commit message. Do not show final code change in a single commit. Show us your best code and the steps you took to refactor this code.
 2. We dont like commit messages like "fix typo", "update code", "housekeeping", "cleanup code", use git fixup for this cases.
 3. Good clean code.
 4. Meaningful names.
