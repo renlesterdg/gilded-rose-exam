@@ -70,5 +70,6 @@ above 50, however `Sulfuras` is a legendary item and as such its
 ### Instructions
 
 - Given the above requirements, update `#update_quality` in `gilded_rose.rb` to support `Conjured` items.
+- Please refactor the implementation of `gilded_rose.rb` and make it more readable and maintainable.
 - Hint: Make use of `gilded_rose_spec.rb`.
 - Be prepared to talk about your approach and resulting implementation.
