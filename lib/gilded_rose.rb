@@ -11,6 +11,8 @@ class GildedRose
     ]
   end
 
+  MAX_QUALITY = 50
+  MIN_QUALITY = 0
 
   def initialize(items)
     @items = items
@@ -21,23 +23,15 @@ class GildedRose
       next if item.name == Type::SULFURAS
 
       if !Type::WHICH_AGES.include?(item.name)
-        if item.quality > 0
-          item.quality = item.quality - 1
-        end
+        item.quality = get_quality(item.quality - 1)
       else
-        if item.quality < 50
-          item.quality = item.quality + 1
-          if item.name == Type::TAFKAL80ETC
-            if item.sell_in < 11
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-            if item.sell_in < 6
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
+        item.quality = get_quality(item.quality + 1)
+        if item.name == Type::TAFKAL80ETC
+          if item.sell_in < 11
+            item.quality = get_quality(item.quality + 1)
+          end
+          if item.sell_in < 6
+            item.quality = get_quality(item.quality + 1)
           end
         end
       end
@@ -45,18 +39,20 @@ class GildedRose
       if item.sell_in < 0
         if item.name != Type::AGED_BRIE
           if item.name != Type::TAFKAL80ETC
-            if item.quality > 0
-              item.quality = item.quality - 1
-            end
+            item.quality = get_quality(item.quality - 1)
           else
-            item.quality = item.quality - item.quality
+            item.quality = get_quality(item.quality - item.quality)
           end
         else
-          if item.quality < 50
-            item.quality = item.quality + 1
-          end
+          item.quality = get_quality(item.quality + 1)
         end
       end
     end
+  end
+
+  private
+
+  def get_quality(value)
+    [[value, MAX_QUALITY].min, MIN_QUALITY].max
   end
 end
