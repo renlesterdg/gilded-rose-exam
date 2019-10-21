@@ -26,7 +26,7 @@ describe GildedRose do
       let(:initial_quality) { 0 }
 
       it "cannot go negative" do
-        expect(item.quality).to be >=0
+        expect(item.quality).to be >= 0
       end
     end
 
@@ -148,8 +148,8 @@ describe GildedRose do
     context "with multiple items" do
       let(:items) do
         [
-          Item.new("NORMAL ITEM", 5, 10),
-          Item.new("Aged Brie", 3, 10)
+            Item.new("NORMAL ITEM", 5, 10),
+            Item.new("Aged Brie", 3, 10)
         ]
       end
 
@@ -158,5 +158,39 @@ describe GildedRose do
         expect(items[0].quality).to eq(9)
       end
     end
+
+    context "when item name is 'Conjured'" do
+      let(:name) { 'Conjured' }
+
+      it "lowers the item sellin by 1" do
+        expect(item.sell_in).to eq 4
+      end
+
+      it "lowers the quality by 2" do
+        expect(item.quality).to eq 8
+      end
+
+      context "When Initial quality ranges from 0 to 2" do
+        let(:initial_quality) { rand(2) }
+        it "Quality is set to 0" do
+          expect(item.quality).to eq 0
+        end
+      end
+
+      context "when sell by date has passed" do
+        let(:initial_sell_in) { -1 }
+
+        it "quality degrades twice as fast" do
+          expect(item.quality).to eq 6 # from 10 it goes to 6
+        end
+        context "When Initial quality ranges from 0 to 4" do
+          let(:initial_quality) { rand(4) }
+          it "Quality is set to 0" do
+            expect(item.quality).to eq 0
+          end
+        end
+      end
+    end
   end
+
 end
