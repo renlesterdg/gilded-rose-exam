@@ -123,6 +123,8 @@ describe GildedRose do
       end
 
       context "and sell in is 4 days" do
+        let(:initial_sell_in) { 4 }
+
         it "increases quality by 3" do
           expect(item.quality).to eq 13
         end
