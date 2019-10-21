@@ -17,6 +17,9 @@ class GildedRose
         # Classify Sulfuras as Legendary
       when "Sulfuras, Hand of Ragnaros"
         @itemGrade = "Legendary"
+        # Conjured Items
+      when "Conjured"
+        @itemGrade = "Conjured"
         # Others Classified as common
       else
         @itemGrade = "Common"
@@ -55,7 +58,32 @@ class GildedRose
       when "Legendary"
         # Unlike conventional items, The legendary item does not degrade in terms of quality or sell_in
 
-        # Logic To deal With common Items
+        # Logic To deal With Conjured Items
+      when "Conjured"
+        # First Decrease sell_in by 1
+        item.sell_in = item.sell_in - 1
+        # If sell_in less than 0
+        if item.sell_in < 0
+          # (and) If Quality More than or Equal to 2
+          if item.quality >= 4
+            # Decrease Item quality by 2
+            item.quality = item.quality - 4
+            # Else (Quality less than 2)
+          else
+            # Assign Quality to 0
+            item.quality = 0
+          end
+          # Else (sell_in More than 0)
+        else
+          # (and) If Quality More than or Equal to 1
+          if item.quality >= 2
+            # Decrease Item quality by 1
+            item.quality = item.quality - 2
+          else
+            # Assign Quality to 0
+            item.quality = 0
+          end
+        end
       else
         # First Decrease sell_in by 1
         item.sell_in = item.sell_in - 1
