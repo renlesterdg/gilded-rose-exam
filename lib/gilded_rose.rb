@@ -22,31 +22,28 @@ class GildedRose
     @items.each do |item|
       next if item.name == Type::SULFURAS
 
-      if !Type::WHICH_AGES.include?(item.name)
-        item.quality = get_quality(item.quality - 1)
-      else
-        item.quality = get_quality(item.quality + 1)
-        if item.name == Type::TAFKAL80ETC
-          if item.sell_in < 11
-            item.quality = get_quality(item.quality + 1)
-          end
-          if item.sell_in < 6
-            item.quality = get_quality(item.quality + 1)
-          end
-        end
-      end
-      item.sell_in = item.sell_in - 1
-      if item.sell_in < 0
-        if item.name != Type::AGED_BRIE
-          if item.name != Type::TAFKAL80ETC
-            item.quality = get_quality(item.quality - 1)
-          else
-            item.quality = get_quality(item.quality - item.quality)
-          end
+      case item.name
+      when Type::TAFKAL80ETC
+        if item.sell_in <= 0
+          item.quality = MIN_QUALITY
+        elsif item.sell_in < 6
+          item.quality = get_quality(item.quality + 3)
+        elsif item.sell_in < 11
+          item.quality = get_quality(item.quality + 2)
         else
           item.quality = get_quality(item.quality + 1)
         end
+      when Type::AGED_BRIE
+        item.quality = get_quality(item.quality + 1)
+      else
+        if item.sell_in <= 0
+          item.quality = get_quality(item.quality - 2)
+        else
+          item.quality = get_quality(item.quality - 1)
+        end
       end
+
+      item.sell_in = item.sell_in - 1
     end
   end
 
