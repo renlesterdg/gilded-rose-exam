@@ -35,6 +35,12 @@ class GildedRose
         end
       when Type::AGED_BRIE
         item.quality = get_quality(item.quality + 1)
+      when Type::CONJURED
+        if item.sell_in <= 0
+          item.quality = get_quality(item.quality - 4)
+        else
+          item.quality = get_quality(item.quality - 2)
+        end
       else
         if item.sell_in <= 0
           item.quality = get_quality(item.quality - 2)

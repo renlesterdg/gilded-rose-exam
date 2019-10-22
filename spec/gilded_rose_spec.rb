@@ -148,11 +148,9 @@ describe GildedRose do
     end
 
     context "when item name is 'Conjured'" do
-      it "lowers the item sellin by 2" do
-        expect(item.sell_in).to eq 3
-      end
+      let(:name) { 'Conjured' }
 
-      it "lowers the quality by 2" do
+      it "lowers the item sellin by 2" do
         expect(item.quality).to eq 8
       end
 
@@ -165,10 +163,18 @@ describe GildedRose do
       end
 
       context "when sell by date has passed" do
-        let(:initial_sell_in) { -1 }
+        let(:initial_sell_in) { 0 }
 
         it "quality degrades twice as fast" do
-          expect(item.quality).to eq 6 # from 10 it goes to 8
+          expect(item.quality).to eq 6
+        end
+
+        context "when a quality is already 0" do
+          let(:initial_quality) { 0 }
+
+          it "cannot go negative" do
+            expect(item.quality).to be >=0
+          end
         end
       end
     end
