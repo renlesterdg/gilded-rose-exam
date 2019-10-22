@@ -27,25 +27,25 @@ class GildedRose
         if item.sell_in <= 0
           item.quality = MIN_QUALITY
         elsif item.sell_in < 6
-          item.quality = get_quality(item.quality + 3)
+          set_quality(item, item.quality + 3)
         elsif item.sell_in < 11
-          item.quality = get_quality(item.quality + 2)
+          set_quality(item, item.quality + 2)
         else
-          item.quality = get_quality(item.quality + 1)
+          set_quality(item, item.quality + 1)
         end
       when Type::AGED_BRIE
-        item.quality = get_quality(item.quality + 1)
+        set_quality(item, item.quality + 1)
       when Type::CONJURED
         if item.sell_in <= 0
-          item.quality = get_quality(item.quality - 4)
+          set_quality(item, item.quality - 4)
         else
-          item.quality = get_quality(item.quality - 2)
+          set_quality(item, item.quality - 2)
         end
       else
         if item.sell_in <= 0
-          item.quality = get_quality(item.quality - 2)
+          set_quality(item, item.quality - 2)
         else
-          item.quality = get_quality(item.quality - 1)
+          set_quality(item, item.quality - 1)
         end
       end
 
@@ -55,7 +55,10 @@ class GildedRose
 
   private
 
-  def get_quality(value)
-    [[value, MAX_QUALITY].min, MIN_QUALITY].max
+  def set_quality(item, value)
+    return if value <= MIN_QUALITY
+    return if value >= MAX_QUALITY
+
+    item.quality = value
   end
 end
