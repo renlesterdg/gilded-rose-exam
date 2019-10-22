@@ -1,15 +1,12 @@
 class GildedRose
-  module Type
-    AGED_BRIE = "Aged Brie"
-    TAFKAL80ETC = "Backstage passes to a TAFKAL80ETC concert"
-    SULFURAS = "Sulfuras, Hand of Ragnaros"
-    CONJURED = "Conjured"
 
-    WHICH_AGES = [
-      AGED_BRIE,
-      TAFKAL80ETC
-    ]
-  end
+  # Need to define a method if you are adding a new type.
+  TYPE = {
+    'aged_brie' => "Aged Brie",
+    'tafkal80etc' => "Backstage passes to a TAFKAL80ETC concert",
+    'sulfuras' => "Sulfuras, Hand of Ragnaros",
+    'conjured' => "Conjured"
+  }.freeze
 
   MAX_QUALITY = 50
   MIN_QUALITY = 0
@@ -20,40 +17,60 @@ class GildedRose
 
   def update_quality
     @items.each do |item|
-      next if item.name == Type::SULFURAS
+      next if item.name == TYPE['sulfuras'] # has no sell by date nor decreases in quality
 
-      case item.name
-      when Type::TAFKAL80ETC
-        if item.sell_in <= 0
-          item.quality = MIN_QUALITY
-        elsif item.sell_in < 6
-          set_quality(item, item.quality + 3)
-        elsif item.sell_in < 11
-          set_quality(item, item.quality + 2)
-        else
-          set_quality(item, item.quality + 1)
-        end
-      when Type::AGED_BRIE
-        set_quality(item, item.quality + 1)
-      when Type::CONJURED
-        if item.sell_in <= 0
-          set_quality(item, item.quality - 4)
-        else
-          set_quality(item, item.quality - 2)
-        end
+      func = "update_#{TYPE.key(item.name)}"
+
+      if self.respond_to?(func, true)
+        send(func, item)
       else
-        if item.sell_in <= 0
-          set_quality(item, item.quality - 2)
-        else
-          set_quality(item, item.quality - 1)
-        end
+        update_normal(item)
       end
-
       item.sell_in = item.sell_in - 1
     end
   end
 
   private
+
+  def update_normal(item)
+    if item.sell_in <= 0
+      # sell by date has passed, quality degrades twice as fast
+      set_quality(item, item.quality - 2)
+      return
+    end
+
+    set_quality(item, item.quality - 1)
+  end
+
+  # Aged Brie actually increases in quality the older it gets
+  def update_aged_brie(item)
+    set_quality(item, item.quality + 1)
+  end
+
+  # increases in quality as its sell_in value approaches;
+  # quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less
+  # but quality drops to 0 after the concert
+  def update_tafkal80etc(item)
+    if item.sell_in <= 0
+      item.quality = MIN_QUALITY
+    elsif item.sell_in < 6
+      set_quality(item, item.quality + 3)
+    elsif item.sell_in < 11
+      set_quality(item, item.quality + 2)
+    else
+      set_quality(item, item.quality + 1)
+    end
+  end
+
+  # degrade in quality twice as fast as normal items
+  def update_conjured(item)
+    if item.sell_in <= 0
+      set_quality(item, item.quality - 4)
+      return
+    end
+
+    set_quality(item, item.quality - 2)
+  end
 
   def set_quality(item, value)
     return if value <= MIN_QUALITY
