@@ -51,11 +51,12 @@ class GildedRose
   # quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less
   # but quality drops to 0 after the concert
   def update_tafkal80etc(item)
-    if item.sell_in <= 0
+    case
+    when item.sell_in <= 0
       item.quality = MIN_QUALITY
-    elsif item.sell_in < 6
+    when item.sell_in < 6
       set_quality(item, item.quality + 3)
-    elsif item.sell_in < 11
+    when item.sell_in < 11
       set_quality(item, item.quality + 2)
     else
       set_quality(item, item.quality + 1)
