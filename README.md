@@ -8,7 +8,6 @@
 4. Create a local branch from your fork.
 5. Run `bundle install` This will install all dependencies for our test runner, rspec.
 6. Run `bundle exec rspec` or `rake` This will run all unit tests, Please ensure all tests are green.
-7. When you are done, Please open a pull request from your local branch to your main forked branch.
 
 If you have any question or clarification about the code. Please create an issue on the main repo and tag me @renlesterdg
 
@@ -73,4 +72,10 @@ above 50, however `Sulfuras` is a legendary item and as such its
 - Given the above requirements, update `#update_quality` in `gilded_rose.rb` to support `Conjured` items.
 - Please refactor the implementation of `gilded_rose.rb` and make it more readable and maintainable.
 - Hint: Make use of `gilded_rose_spec.rb`.
+- When you are done, Please open a `pull request` from your `local branch` to your main `forked branch`.
 - Be prepared to talk about your approach and resulting implementation.
+
+### Fave Engineering Culture
+
+We just did a video and shared about our product and engineering culture you can [find it here](https://www.linkedin.com/posts/fave-group_wearefave-digitalproduct-product-activity-6592343555904245760-tlQm)
+
