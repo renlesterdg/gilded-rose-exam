@@ -14,6 +14,8 @@ class GildedRose
         item = update_backstage_pass(item)
       when Constant.sulfuras 
         item = update_sulfuras(item)
+      when Constant.conjured 
+        item = update_conjured_item(item)
       else
         item = update_ordinary_item(item)
       end
@@ -65,4 +67,13 @@ class GildedRose
     end
     return item
   end
+  
+  def update_conjured_item(item)
+    item.sell_in = item.sell_in - 1
+
+    item.quality = change_quality_value(item.quality, - 2)
+  return item
+end
+
+
 end
