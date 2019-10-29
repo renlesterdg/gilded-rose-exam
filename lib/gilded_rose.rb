@@ -7,7 +7,12 @@ class GildedRose
 
   def update_quality
     @items.each do |item|
-      item = update_ordinary_item(item)
+      case item.name 
+      when Constant.aged_brie
+        item = update_aged_brie(item)
+      else
+        item = update_ordinary_item(item)
+      end
     end
   end
 
