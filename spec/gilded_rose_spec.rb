@@ -1,5 +1,6 @@
 require_relative '../lib/gilded_rose'
 require_relative '../lib/item'
+require_relative '../lib/constant'
 
 describe GildedRose do
   let(:name) { "item" }
@@ -141,6 +142,21 @@ describe GildedRose do
 
         it "sets the quality to 0" do
           expect(item.quality).to eq 0
+        end
+      end
+    end
+
+    context "when item name is #{Constant.conjured}" do 
+      let(:name) { Constant.conjured }
+      it "quality degrades twice as fast" do
+        expect(item.quality).to eq 8 # from 10 it goes to 8
+      end
+
+      context "and quality is 0" do
+        let(:initial_quality) { 0 }
+
+        it "cannot go negative" do
+          expect(item.quality).to be >= 0
         end
       end
     end
