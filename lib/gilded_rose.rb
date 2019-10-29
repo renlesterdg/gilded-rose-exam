@@ -1,3 +1,5 @@
+require_relative './constant'
+
 class GildedRose
   def initialize(items)
     @items = items
@@ -50,4 +52,12 @@ class GildedRose
       end
     end
   end
+
+  def change_quality_value(quality_value, to_add_value)
+    quality_value = [quality_value + to_add_value, Constant.max_quality_value].min
+    quality_value = [quality_value, Constant.min_quality_value].max
+    return quality_value
+  end
+
+  
 end
