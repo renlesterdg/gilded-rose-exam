@@ -26,4 +26,11 @@ class GildedRose
     item.sell_in = item.sell_in - 1
     return item
   end
+
+  def update_aged_brie(item)
+    item.quality = change_quality_value(item.quality, 1)
+
+    item.sell_in = item.sell_in - 1
+    return item
+  end
 end
