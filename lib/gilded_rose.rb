@@ -12,6 +12,8 @@ class GildedRose
         item = update_aged_brie(item)
       when Constant.backstage_pass 
         item = update_backstage_pass(item)
+      when Constant.sulfuras 
+        item = update_sulfuras(item)
       else
         item = update_ordinary_item(item)
       end
@@ -55,5 +57,12 @@ class GildedRose
 
     item.sell_in = item.sell_in - 1
     return item 
+  end
+
+  def update_sulfuras(item)
+    if(item.quality == Constant.sulfuras_special_quality_value) 
+      return item.freeze
+    end
+    return item
   end
 end
