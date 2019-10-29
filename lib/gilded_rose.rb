@@ -10,6 +10,8 @@ class GildedRose
       case item.name 
       when Constant.aged_brie
         item = update_aged_brie(item)
+      when Constant.backstage_pass 
+        item = update_backstage_pass(item)
       else
         item = update_ordinary_item(item)
       end
@@ -37,5 +39,21 @@ class GildedRose
 
     item.sell_in = item.sell_in - 1
     return item
+  end
+
+  def update_backstage_pass(item) 
+    item.quality = change_quality_value(item.quality, 1)
+    if item.sell_in <= 10 
+      item.quality = change_quality_value(item.quality, 1)
+    end
+    if item.sell_in <= 5 
+      item.quality = change_quality_value(item.quality, 1)
+    end
+    if item.sell_in <= Constant.min_sell_in_value 
+      item.quality = Constant.min_quality_value
+    end
+
+    item.sell_in = item.sell_in - 1
+    return item 
   end
 end
