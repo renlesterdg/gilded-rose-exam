@@ -3,8 +3,17 @@ class GildedRose
     @items = items
   end
 
-  def increase_quality(item)
-    item.quality += 1
+  def update_aged_brie(item)
+    if item.quality < 50
+      item.quality += 1
+    end
+  end
+
+  def decrease_quality(item)
+    if item.sell_in <= 0
+      return item.quality -= 2
+    end
+    item.quality -= 1
   end
 
   def update_conjured(item)
@@ -19,21 +28,21 @@ class GildedRose
     elsif item.sell_in <= 10 && item.sell_in > 5
       item.quality += 2
     else
-      increase_quality(item)
+      item.quality += 1
     end
   end
 
   def update_quality
     @items.each do |item|
-      if item.quality >= 0 && item.quality <= 50 && item.name != "Sulfuras, Hand of Ragnaros"
+      if item.quality > 0 && item.quality < 50 && item.name != "Sulfuras, Hand of Ragnaros"
         if item.name == "Aged Brie"
-          increase_quality(item)
+          update_aged_brie(item)
         elsif item.name == "Backstage passes to a TAFKAL80ETC concert"
           update_backstage_passes(item)
         elsif item.name == "Conjured"
           update_conjured(item)
         else
-          item.quality -= 1
+          decrease_quality(item)
         end
         item.sell_in -= 1
       end
