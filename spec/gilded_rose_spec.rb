@@ -172,11 +172,11 @@ describe GildedRose do
         end
       end
 
-      context "and quality is 50" do
-        let(:initial_quality) { 50 }
+      context "and quality is 1" do
+        let(:initial_quality) { 1 }
 
-        it "cannot exceed 50" do
-          expect(item.quality).to be <= 50
+        it "cannot go negative" do
+          expect(item.quality).to be >= 0
         end
       end
 
