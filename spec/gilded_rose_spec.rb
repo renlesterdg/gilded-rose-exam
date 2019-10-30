@@ -143,6 +143,14 @@ describe GildedRose do
           expect(item.quality).to eq 0
         end
       end
+
+      context "and quality is 49" do
+        let(:initial_quality) { 49 }
+
+        it "cannot exceed 50" do
+          expect(item.quality).to be <= 50
+        end
+      end
     end
 
     context "when item name is 'Conjured'" do
