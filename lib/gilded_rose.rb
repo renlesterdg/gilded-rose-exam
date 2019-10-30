@@ -20,17 +20,22 @@ class GildedRose
   end
 
   def update_conjured(item)
+    # if item sell by date passes, then quality decreases twice as fast
     if item.sell_in <= 0
       return item.quality -= 4
     end
+    # conjured items decrease 2 times faster than normal items
     item.quality -= 2
   end
 
   def update_backstage_passes(item)
+    # quality becomes 0 when sell by date passes for backstage passes
     if item.sell_in <= 0
       item.quality = 0
+    # quality increase by 3 if sell by date is within 1 and 5
     elsif item.sell_in <= 5 && item.sell_in > 0
       item.quality += 3
+    # quality increase by 2 if sell by date is within 10 and 6
     elsif item.sell_in <= 10 && item.sell_in > 5
       item.quality += 2
     else
@@ -40,6 +45,7 @@ class GildedRose
 
   def update_quality
     @items.each do |item|
+      # if item quality is not sulfuras, and is within 1 and 49
       if item.quality > 0 && item.quality < 50 && item.name != "Sulfuras, Hand of Ragnaros"
         if item.name == "Aged Brie"
           update_aged_brie(item)
@@ -50,58 +56,9 @@ class GildedRose
         else
           decrease_quality(item)
         end
+        # decreases the sell by date for every item
         item.sell_in -= 1
       end
     end
   end
-
-
-
-  # def update_quality
-  #   @items.each do |item|
-  #     if item.name != "Aged Brie" && item.name != "Backstage passes to a TAFKAL80ETC concert"
-  #       if item.quality > 0
-  #         if item.name != "Sulfuras, Hand of Ragnaros"
-  #           item.quality = item.quality - 1
-  #         end
-  #       end
-  #     else
-  #       if item.quality < 50
-  #         item.quality = item.quality + 1
-  #         if item.name == "Backstage passes to a TAFKAL80ETC concert"
-  #           if item.sell_in < 11
-  #             if item.quality < 50
-  #               item.quality = item.quality + 1
-  #             end
-  #           end
-  #           if item.sell_in < 6
-  #             if item.quality < 50
-  #               item.quality = item.quality + 1
-  #             end
-  #           end
-  #         end
-  #       end
-  #     end
-  #     if item.name != "Sulfuras, Hand of Ragnaros"
-  #       item.sell_in = item.sell_in - 1
-  #     end
-  #     if item.sell_in < 0
-  #       if item.name != "Aged Brie"
-  #         if item.name != "Backstage passes to a TAFKAL80ETC concert"
-  #           if item.quality > 0
-  #             if item.name != "Sulfuras, Hand of Ragnaros"
-  #               item.quality = item.quality - 1
-  #             end
-  #           end
-  #         else
-  #           item.quality = item.quality - item.quality
-  #         end
-  #       else
-  #         if item.quality < 50
-  #           item.quality = item.quality + 1
-  #         end
-  #       end
-  #     end
-  #   end
-  # end
 end
