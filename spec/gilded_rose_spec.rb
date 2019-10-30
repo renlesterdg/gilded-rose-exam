@@ -30,6 +30,14 @@ describe GildedRose do
       end
     end
 
+    context "when a quality is 1" do
+      let(:initial_quality) { 1 }
+
+      it "cannot go negative" do
+        expect(item.quality).to be >=0
+      end
+    end
+
     context "when sell by date has passed" do
       let(:initial_sell_in) { -1 }
 

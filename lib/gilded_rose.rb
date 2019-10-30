@@ -10,7 +10,7 @@ class GildedRose
 
   def decrease_normal_item_quality(item)
     # if item sell by date passes, then quality decreases twice as fast
-    if item.sell_in <= 0
+    if item.sell_in <= 0 && item.quality >= 2
       return item.quality -= 2
     end
     item.quality -= 1
