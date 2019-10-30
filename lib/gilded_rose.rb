@@ -4,12 +4,15 @@ class GildedRose
   end
 
   def update_aged_brie(item)
+    # item quality can never be more than 50
     if item.quality < 50
+      # aged brie increases in quality
       item.quality += 1
     end
   end
 
   def decrease_quality(item)
+    # if item sell by date passes, then quality decreases twice as fast
     if item.sell_in <= 0
       return item.quality -= 2
     end
@@ -17,7 +20,10 @@ class GildedRose
   end
 
   def update_conjured(item)
-    item.quality += 2
+    if item.sell_in <= 0
+      return item.quality -= 4
+    end
+    item.quality -= 2
   end
 
   def update_backstage_passes(item)
