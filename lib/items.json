@@ -1,0 +1,22 @@
+[
+    {
+        "name": "ahmed",
+        "sell_in": "0",
+        "quaility": "50",
+        "rules": {
+            "min_quaility": 0,
+            "max_quaility": 50,
+            "quality_type": "increase"
+        }
+    },
+    {
+        "name": "Aged Brie",
+        "sell_in": "sell_in",
+        "quaility": "20",
+        "rules": {
+            "min_quaility": 0,
+            "max_quaility": 50,
+            "quality_type": "increase"
+        }
+    }
+]
