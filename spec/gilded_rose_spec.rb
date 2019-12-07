@@ -38,8 +38,8 @@ describe GildedRose do
       end
     end
 
-    context "when item name is 'Aged Brie'" do
-      let(:name) { 'Aged Brie' }
+    context "when item name is #{ GildedRose::AGED_BRIE } " do
+      let(:name) { GildedRose::AGED_BRIE }
 
       it "increases quality the older it gets" do
         expect(item.quality).to eq 11 # from 10 it goes to 11
@@ -54,8 +54,8 @@ describe GildedRose do
       end
     end
 
-    context "when item name is 'Sulfuras, Hand of Ragnaros'" do
-      let(:name) { 'Sulfuras, Hand of Ragnaros' }
+    context "when item name is #{ GildedRose::SULFURAS }" do
+      let(:name) { GildedRose::SULFURAS }
 
       it "has no sell by date" do
         expect(item.sell_in).to eq 5
@@ -73,8 +73,8 @@ describe GildedRose do
       end
     end
 
-    context "when item name is 'Backstage passes to a TAFKAL80ETC concert'" do
-      let(:name) { 'Backstage passes to a TAFKAL80ETC concert' }
+    context "when item name is #{ GildedRose::BACKSTAGE_PASSES }" do
+      let(:name) { GildedRose::BACKSTAGE_PASSES }
 
       context "and sell in is 11 days" do
         let(:initial_sell_in) { 11 }
@@ -149,7 +149,7 @@ describe GildedRose do
       let(:items) do
         [
           Item.new("NORMAL ITEM", 5, 10),
-          Item.new("Aged Brie", 3, 10)
+          Item.new(GildedRose::AGED_BRIE, 3, 10)
         ]
       end
 
