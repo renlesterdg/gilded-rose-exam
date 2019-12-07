@@ -181,13 +181,27 @@ describe GildedRose do
       let(:items) do
         [
           Item.new("NORMAL ITEM", 5, 10),
-          Item.new(GildedRose::AGED_BRIE, 3, 10)
+          Item.new(GildedRose::AGED_BRIE, 3, 10),
+          Item.new(GildedRose::CONJURED, 4, 10),
+          Item.new(GildedRose::CONJURED, 0, 10),
+          Item.new(GildedRose::CONJURED, -1, 10)
         ]
       end
 
       it "normal item should should lower their sellin and quality by 1" do
         expect(items[0].sell_in).to eq(4)
         expect(items[0].quality).to eq(9)
+      end
+
+      it "#{ GildedRose::AGED_BRIE } item should lower their sellin and increases quality the older it gets" do
+        expect(items[1].sell_in).to eq(2)
+        expect(items[1].quality).to eq(11)
+      end
+
+      it "#{ GildedRose::CONJURED } item should be degrade `quality` twice as fast as normal items" do
+        expect(items[2].quality).to eq(8)
+        expect(items[3].quality).to eq(6)
+        expect(items[4].quality).to eq(6)
       end
     end
   end
