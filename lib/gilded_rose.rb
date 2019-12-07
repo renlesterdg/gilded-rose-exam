@@ -13,16 +13,20 @@ class GildedRose
 
   def update_quality
     @items.each do |item|
-      if item.name != AGED_BRIE && item.name != BACKSTAGE_PASSES && item.name != SULFURAS && item.name != CONJURED
-        update_normal_item(item)
-      elsif item.name == SULFURAS
+
+      $name = item.name
+
+      case $name
+      when SULFURAS
         item.quality = item.quality
-      elsif item.name == BACKSTAGE_PASSES
+      when BACKSTAGE_PASSES
         update_backstage_pases(item)
-      elsif item.name == AGED_BRIE
+      when AGED_BRIE
         update_aged_brie(item)
-      elsif item.name == CONJURED
+      when CONJURED
         update_conjured(item)
+      else
+        update_normal_item(item)
       end
 
       if item.name != SULFURAS
