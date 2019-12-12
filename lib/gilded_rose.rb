@@ -39,6 +39,8 @@ class GildedRose
       check_backstage_passes(item)
     when @sulfuras # ITEM IS SULFURAS
       check_sulfuras(item)
+    when @conjured # ITEM IS CONJURED
+      check_conjured(item)
     else # DEFAULT ITEM
       check_default_item(item)
     end
@@ -79,6 +81,14 @@ class GildedRose
     item.quality
   end
 
+  def check_conjured(item)
+    if item.quality > @min_quality
+      item.quality -= 2
+    end
+    
+    decrease_sell_in(item)
+  end
+
   # DEFAULT ITEM CONDITION
   def check_default_item(item)
     if item.quality > @min_quality 
@@ -93,7 +103,7 @@ class GildedRose
 
   end
 
-  # SELL_IN DECREASE BY 1 EACH DAY
+  # SELL_IN DECREASE BY 1 EACH
   def decrease_sell_in(item)
     item.sell_in -= 1
   end
