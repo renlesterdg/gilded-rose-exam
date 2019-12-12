@@ -145,6 +145,15 @@ describe GildedRose do
       end
     end
 
+    # CONJURED UNIT TEST
+    context "when item name is 'Conjured'" do
+      let(:name) { 'Conjured' }
+
+      it "decreases quality by 2" do
+        expect(item.quality).to eq(8)
+      end
+    end
+
     context "with multiple items" do
       let(:items) do
         [

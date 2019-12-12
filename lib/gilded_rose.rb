@@ -49,7 +49,7 @@ class GildedRose
   # AGED BRIE CONDITION
   def check_aged_brie(item)
     if item.quality < @max_quality
-      item.quality += 1
+      increase_quality_by1(item)
     end
 
     decrease_sell_in(item)
@@ -58,14 +58,14 @@ class GildedRose
   # BACKSTAGE PASSES CONDITION
   def check_backstage_passes(item)
     if item.quality < @max_quality
-      item.quality += 1
+      increase_quality_by1(item)
 
-      if item.sell_in <= @sell_in_10days # QUALITY INCREASE BY TWICE WHEN 10 DAYS LEFT
-          item.quality += 1
+      if item.sell_in <= @sell_in_10days # QUALITY INCREASE BY 2 WHEN 10 DAYS LEFT
+        increase_quality_by1(item)
       end
 
-      if item.sell_in <= @sell_in_5days # QUALITY INCREASE BY TRIPLE WHEN 5 DAYS LEFT
-          item.quality += 1
+      if item.sell_in <= @sell_in_5days # QUALITY INCREASE BY 3 WHEN 5 DAYS LEFT
+        increase_quality_by1(item)
       end
 
       if item.sell_in <= @sell_in_0days # QUALITY BECOME ZERO CONCERT PASSED
@@ -91,12 +91,10 @@ class GildedRose
 
   # DEFAULT ITEM CONDITION
   def check_default_item(item)
-    if item.quality > @min_quality 
-      item.quality -= 1
-    end
+    decrease_quality_by1(item)
 
     if item.sell_in < @sell_in_0days # DROP QUALITY TWICE AFTER SELL BY DATE
-      item.quality -= 1
+      decrease_quality_by1(item)
     end
 
     decrease_sell_in(item)
@@ -106,6 +104,18 @@ class GildedRose
   # SELL_IN DECREASE BY 1 EACH
   def decrease_sell_in(item)
     item.sell_in -= 1
+  end
+
+  # QUALITY INCREASE BY 1 EACH
+  def increase_quality_by1(item)
+    item.quality += 1
+  end
+
+  # QUALITY DECREASE BY 1 EACH
+  def decrease_quality_by1(item)
+    if item.quality > @min_quality  # ENSURE QUALITY NEVER NEGATIVE
+      item.quality -= 1
+    end
   end
 
 end
