@@ -162,7 +162,7 @@ describe GildedRose do
         ]
       end
 
-      it "normal item should should lower their sellin and quality by 1" do
+      it "normal item should lower their sell in and quality by 1" do
         expect(items[0].sell_in).to eq(4)
         expect(items[0].quality).to eq(9)
       end
