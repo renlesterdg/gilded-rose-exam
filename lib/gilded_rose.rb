@@ -27,19 +27,11 @@ class GildedRose
 
       elsif item.name == "Conjured"
 
-        if item.sell_in <= 0
-          item = decrease_item_quality(item, 4)
-        else
-          item = decrease_item_quality(item, 2)
-        end
+        item = decrease_item_quality(item, 2)
 
       elsif
 
-        if item.sell_in <= 0
-          item = decrease_item_quality(item, 2)
-        else
-          item = decrease_item_quality(item, 1)
-        end
+        item = decrease_item_quality(item, 1)
 
       end
 
@@ -59,7 +51,11 @@ class GildedRose
 
   def decrease_item_quality( item, decreaseValue )
     
-    if item.quality > 0
+    return item if item.quality <= 0
+    
+    if item.sell_in <= 0
+      item.quality -= decreaseValue * 2
+    else
       item.quality -= decreaseValue
     end
 
