@@ -158,5 +158,54 @@ describe GildedRose do
         expect(items[0].quality).to eq(9)
       end
     end
+
+    context "when item name is 'Conjured'" do
+      let(:name) { 'Conjured' }
+
+      it "decrease quality the older it gets twice as fast" do
+        expect(item.quality).to eq 8 # from 10 it goes to 11
+      end
+    end
   end
+
+  describe "#increase_quality" do
+
+    it "increase the item quality by 1" do
+
+      item = Item.new("item", 3, 3)
+      items = [item]
+      subject = GildedRose.new(items)
+      item = subject.increase_item_quality(item, 1)
+
+      expect(item.quality).to eq 4
+    end
+  end
+
+  describe "#decrease_quality" do
+
+    it "decrease the item quality by 1" do
+
+      item = Item.new("item", 3, 3)
+      items = [item]
+      subject = GildedRose.new(items)
+      item = subject.decrease_item_quality(item, 1)
+
+      expect(item.quality).to eq 2
+    end
+
+    context "when sell by date has passed" do
+
+      it "decrease the item quality twice as fast" do
+
+        item = Item.new("item", 0, 3)
+        items = [item]
+        subject = GildedRose.new(items)
+        item = subject.decrease_item_quality(item, 1)
+  
+        expect(item.quality).to eq 1
+      end
+
+    end
+  end
+
 end
