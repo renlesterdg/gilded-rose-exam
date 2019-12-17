@@ -10,31 +10,27 @@ class GildedRose
         next
 
       elsif item.name == "Backstage passes to a TAFKAL80ETC concert"
-        
-        if item.quality < 50
-          if item.sell_in <= 0
-            item.quality = 0
-          elsif item.sell_in <= 5
-            item.quality += 3
-          elsif item.sell_in <= 10
-            item.quality += 2
-          else
-            item.quality += 1
-          end
+
+        if item.sell_in <= 0
+          item.quality = 0
+        elsif item.sell_in <= 5
+          item = increase_item_quality(item, 3)
+        elsif item.sell_in <= 10
+          item = increase_item_quality(item, 2)
+        else
+          item = increase_item_quality(item, 1)
         end
 
       elsif item.name == "Aged Brie"
-    
-        if item.quality < 50
-          item.quality += 1
-        end
 
-      elsif item.quality > 0
+        item = increase_item_quality(item, 1)
+
+      elsif
 
         if item.sell_in <= 0
-          item.quality -= 2
+          item = decrease_item_quality(item, 2)
         else
-          item.quality -= 1
+          item = decrease_item_quality(item, 1)
         end
 
       end
@@ -43,4 +39,23 @@ class GildedRose
 
     end
   end
+
+  def increase_item_quality( item, increaseValue )
+    
+    if item.quality < 50
+      item.quality += increaseValue
+    end
+
+    return item
+  end
+
+  def decrease_item_quality( item, decreaseValue )
+    
+    if item.quality > 0
+      item.quality -= decreaseValue
+    end
+
+    return item
+  end
+
 end
