@@ -25,6 +25,14 @@ class GildedRose
 
         item = increase_item_quality(item, 1)
 
+      elsif item.name == "Conjured"
+
+        if item.sell_in <= 0
+          item = decrease_item_quality(item, 4)
+        else
+          item = decrease_item_quality(item, 2)
+        end
+
       elsif
 
         if item.sell_in <= 0
