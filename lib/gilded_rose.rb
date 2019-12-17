@@ -1,4 +1,7 @@
 class GildedRose
+
+  MAX_QUALITY = 50
+
   def initialize(items)
     @items = items
   end
@@ -40,7 +43,7 @@ class GildedRose
 
   def increase_item_quality( item, increaseValue )
     
-    if item.quality < 50
+    if item.quality < MAX_QUALITY
       item.quality += increaseValue
     end
 
