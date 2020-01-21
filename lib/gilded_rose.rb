@@ -25,12 +25,12 @@ class GildedRose
     end
 
     if item.sell_in < 11
-      item.quality += item.quality
+      item.quality += 1
     end
 
     if item.sell_in < 6
       if item.quality < 50
-        item.quality += item.quality
+        item.quality += 1
       end
     end
 
@@ -51,7 +51,7 @@ class GildedRose
       if item.name != SULFURAS
         item.sell_in = item.sell_in - 1
       end
-      
+
       if item.sell_in < 0
         if item.name != AGED_BRIE
           if item.name != BACKSTAGE
