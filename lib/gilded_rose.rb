@@ -19,11 +19,9 @@ class GildedRose
     return item.quality > 0 && item.quality < 50
   end
 
-  # Update the quality of backstage pass
+  # Update the quality of backstage pass before the sell_in
   def update_backstage(item)
-    if quality_within_boundary(item)
-      item.quality += 1
-    end
+    item.quality += 1
 
     if item.sell_in < 11
       item.quality += 1
@@ -36,6 +34,20 @@ class GildedRose
     end
   end
 
+  # Update quality of item.
+  # This function is called BEFORE decrementing the sell_in value.
+  def update_quality_before_sellin(item)
+    if is_degrading_item(item)
+      item.quality -= 1
+    elsif item.name == BACKSTAGE
+      update_backstage(item)
+    elsif item.name == AGED_BRIE
+      item.quality += 1
+    end
+  end
+
+  # Update quality of item.
+  # This function is called AFTER decrementing the sell_in value.
   def update_quality_after_sellin(item)
     if item.name == AGED_BRIE
       item.quality += 1
@@ -50,11 +62,8 @@ class GildedRose
   def update_quality
     @items.each do |item|
 
-      if is_degrading_item(item) && quality_within_boundary(item)
-        item.quality -= 1
-
-      elsif item.name == BACKSTAGE
-        update_backstage(item)
+      if quality_within_boundary(item)
+        update_quality_before_sellin(item)
       end
 
       if item.name != SULFURAS
