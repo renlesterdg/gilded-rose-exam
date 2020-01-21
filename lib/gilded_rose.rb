@@ -47,12 +47,12 @@ class GildedRose
   # Update quality of item.
   # This function is called AFTER decrementing the sell_in value.
   def update_quality_after_sellin(item)
-    if item.name == AGED_BRIE
-      item.quality += 1
+    if is_degrading_item(item)
+      item.quality -= 1
     elsif item.name == BACKSTAGE
       item.quality -= item.quality
-    elsif item.name != SULFURAS
-      item.quality -= 1
+    elsif item.name == AGED_BRIE
+      item.quality += 1
     end
   end
 
