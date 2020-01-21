@@ -19,6 +19,7 @@ class GildedRose
     return item.quality > 0 && item.quality < 50
   end
 
+  # Update the quality of backstage pass
   def update_backstage(item)
     if quality_within_boundary(item)
       item.quality += 1
@@ -33,42 +34,37 @@ class GildedRose
         item.quality += 1
       end
     end
-
   end
 
+  def update_quality_after_sellin(item)
+    if item.name == AGED_BRIE
+      item.quality += 1
+    elsif item.name == BACKSTAGE
+      item.quality -= item.quality
+    elsif item.name != SULFURAS
+      item.quality -= 1
+    end
+  end
+
+  # MAIN FUNCTION BEING CALLED #
   def update_quality
     @items.each do |item|
 
       if is_degrading_item(item) && quality_within_boundary(item)
         item.quality -= 1
 
-      else
-        if item.name == BACKSTAGE
-          update_backstage(item)
-        end
+      elsif item.name == BACKSTAGE
+        update_backstage(item)
       end
 
       if item.name != SULFURAS
-        item.sell_in = item.sell_in - 1
+        item.sell_in -= 1
       end
 
-      if item.sell_in < 0
-        if item.name != AGED_BRIE
-          if item.name != BACKSTAGE
-            if item.quality > 0
-              if item.name != SULFURAS
-                item.quality = item.quality - 1
-              end
-            end
-          else
-            item.quality = item.quality - item.quality
-          end
-        else
-          if item.quality < 50
-            item.quality = item.quality + 1
-          end
-        end
+      if item.sell_in < 0 && quality_within_boundary(item)
+        update_quality_after_sellin(item)
       end
+
     end
   end
 
