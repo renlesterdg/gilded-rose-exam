@@ -1,15 +1,17 @@
 AGED_BRIE = "Aged Brie"
 BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert"
 SULFURAS  = "Sulfuras, Hand of Ragnaros"
+CONJURED  = "Conjured Item"
+DECAY_RATE = 1
 
 class GildedRose
   def initialize(items)
     @items = items
   end
 
-  # to check if it is an item that degrades in quality
-  def is_degrading_item(item)
-    return item.name != AGED_BRIE && item.name != BACKSTAGE && item.name != SULFURAS
+  # to check if it is a normal item
+  def is_normal_item(item)
+    return item.name != AGED_BRIE && item.name != BACKSTAGE && item.name != SULFURAS && item.name != CONJURED
   end
 
   # to check if the quality of the item is within the boundary,
@@ -35,25 +37,33 @@ class GildedRose
   # Update quality of item.
   # This function is called BEFORE decrementing the sell_in value.
   def update_quality_before_sellin(item)
-    if is_degrading_item(item)
-      item.quality -= 1
+
+    if is_normal_item(item)
+      item.quality -= DECAY_RATE
     elsif item.name == BACKSTAGE
       update_backstage(item)
     elsif item.name == AGED_BRIE
       item.quality += 1
+    elsif item.name == CONJURED
+      item.quality -= DECAY_RATE * 2
     end
+
   end
 
   # Update quality of item.
   # This function is called AFTER decrementing the sell_in value.
   def update_quality_after_sellin(item)
-    if is_degrading_item(item)
+
+    if is_normal_item(item)
       item.quality -= 1
     elsif item.name == BACKSTAGE
       item.quality -= item.quality
     elsif item.name == AGED_BRIE
       item.quality += 1
+    elsif item.name == CONJURED
+      item.quality -= DECAY_RATE * 2
     end
+
   end
 
   # MAIN FUNCTION BEING CALLED #
