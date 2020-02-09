@@ -7,24 +7,93 @@ describe GildedRose do
   let(:initial_quality) { 10 }
   let(:item) { Item.new(name, initial_sell_in, initial_quality) }
   let(:items) { [item] }
+  let(:parameter) {5}
   subject { GildedRose.new(items) }
 
   before(:each) do
     subject.update_quality
   end
 
+  describe "#is_legendery" do
+    context "when name is conjurd" do
+      let(:name) {"Conjured"}
+      it "it's a conjured item" do
+        expect(true)
+      end
+    end
+    context "when name is conjurd" do
+      let(:name) {"Aged Brie"}
+      it "it's not a conjured item" do
+        expect(false)
+      end
+    end
+  end
+
+  describe "#is_normal" do
+    context "when name is conjurd" do
+      let(:name) {"Conjured"}
+      it "it's not a normal item" do
+        expect(false)
+      end
+    end
+    context "when name is conjurd" do
+      let(:name) {"Aged Brie"}
+      it "it's not a not item" do
+        expect(false)
+      end
+    end
+    context "when name is conjurd" do
+      let(:name) {"custom item"}
+      it "it's a normal item" do
+        expect(true)
+      end
+    end
+  end
+
+  describe "#degrade_quality_according_to_expiry" do
+    context "when name is Aged Brie" do
+      let(:name) {"Aged Brie"}
+      context "when sell in = 0" do
+        let (:initial_sell_in){0}
+        it "quality increased as it gets older" do
+          expect(item.quality).to eq 11
+        end
+      end
+      context "when still have validity" do
+        let (:initial_sell_in){3}
+        let(:initial_quality) {0}
+        it "it's not a not item" do
+          expect(item.quality).to eq 1
+        end
+      end
+    end
+    context "when name is Aged Brie" do
+      let(:name) {"normal"}
+      context "when sell in = 0" do
+        let (:initial_sell_in){-1}
+        it "quality decreased as it gets older" do
+          expect(item.quality).to eq 8
+        end
+      end
+      context "when name is conjurd" do
+        let (:initial_sell_in){4}
+        it "it's not a not item" do
+          expect(item.quality).to eq 9
+        end
+      end
+    end
+  end
+
   describe "#update_quality" do
     it "lowers the item sellin by 1" do
       expect(item.sell_in).to eq 4
     end
-
     it "lowers the quality by 1" do
       expect(item.quality).to eq 9
     end
 
     context "when a quality is 0" do
       let(:initial_quality) { 0 }
-
       it "cannot go negative" do
         expect(item.quality).to be >=0
       end
@@ -40,11 +109,9 @@ describe GildedRose do
 
     context "when item name is 'Aged Brie'" do
       let(:name) { 'Aged Brie' }
-
       it "increases quality the older it gets" do
         expect(item.quality).to eq 11 # from 10 it goes to 11
       end
-
       context "and quality is 50" do
         let(:initial_quality) { 50 }
 
@@ -54,17 +121,14 @@ describe GildedRose do
       end
     end
 
-    context "when item name is 'Sulfuras, Hand of Ragnaros'" do
-      let(:name) { 'Sulfuras, Hand of Ragnaros' }
-
+    context "when item name is 'Sulfuras'" do
+      let(:name) { 'Sulfuras' }
       it "has no sell by date" do
         expect(item.sell_in).to eq 5
       end
-
       it "doesnt decrease quality" do
         expect(item.quality).to eq 10
       end
-
       context "when quality is 80" do
         let(:initial_quality) { 80 }
         it "never alters" do
@@ -73,17 +137,14 @@ describe GildedRose do
       end
     end
 
-    context "when item name is 'Backstage passes to a TAFKAL80ETC concert'" do
-      let(:name) { 'Backstage passes to a TAFKAL80ETC concert' }
-
+    context "when item name is 'Backstage Passes'" do
+      let(:name) { 'Backstage Passes' }
       context "and sell in is 11 days" do
         let(:initial_sell_in) { 11 }
-
         it "increases quality by 1" do
           expect(item.quality).to eq 11
         end
       end
-
       context "and sell in is 100 days" do
         let(:initial_sell_in) { 100 }
 
@@ -91,7 +152,6 @@ describe GildedRose do
           expect(item.quality).to eq 11
         end
       end
-
       context "and sell in is 10 days" do
         let(:initial_sell_in) { 10 }
 
@@ -99,7 +159,6 @@ describe GildedRose do
           expect(item.quality).to eq 12
         end
       end
-
       context "and sell in is 9 days" do
         let(:initial_sell_in) { 9 }
 
@@ -107,7 +166,6 @@ describe GildedRose do
           expect(item.quality).to eq 12
         end
       end
-
       context "and sell in is 6 days" do
         let(:initial_sell_in) { 10 }
 
@@ -115,19 +173,17 @@ describe GildedRose do
           expect(item.quality).to eq 12
         end
       end
-
       context "and sell in is 5 days" do
         it "increases quality by 3" do
           expect(item.quality).to eq 13
         end
       end
-
       context "and sell in is 4 days" do
+        let(:initial_sell_in){4}
         it "increases quality by 3" do
           expect(item.quality).to eq 13
         end
       end
-
       context "and sell in is 1" do
         let(:initial_sell_in) { 1 }
 
@@ -135,16 +191,13 @@ describe GildedRose do
           expect(item.quality).to eq 13
         end
       end
-
       context "and sell in is 0" do
-        let(:initial_sell_in) { 0 }
-
+        let(:initial_sell_in) { -1 }
         it "sets the quality to 0" do
           expect(item.quality).to eq 0
         end
       end
     end
-
     context "with multiple items" do
       let(:items) do
         [
@@ -152,7 +205,6 @@ describe GildedRose do
           Item.new("Aged Brie", 3, 10)
         ]
       end
-
       it "normal item should should lower their sellin and quality by 1" do
         expect(items[0].sell_in).to eq(4)
         expect(items[0].quality).to eq(9)
