@@ -121,6 +121,19 @@ describe GildedRose do
       end
     end
 
+    context "when item is 'Conjured'" do
+      let (:name) {"Conjured"}
+      it "quality decgrades twice as fast " do
+        expect(item.quality).to eq 8 # drops from 10 to 8
+      end
+      context "when item is expired" do
+        let (:initial_sell_in){-1}
+        it "quality drops twice the twice of fast" do
+          expect(item.quality).to eq 6 #from 10 to 6
+        end
+      end
+    end
+
     context "when item name is 'Sulfuras'" do
       let(:name) { 'Sulfuras' }
       it "has no sell by date" do
@@ -209,6 +222,6 @@ describe GildedRose do
         expect(items[0].sell_in).to eq(4)
         expect(items[0].quality).to eq(9)
       end
-    end
+    end    
   end
 end

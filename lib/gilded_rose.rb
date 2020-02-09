@@ -6,6 +6,7 @@ class GildedRose
   AGED_BRIE = "Aged Brie"
   BACKSTAGE_PASSES="Backstage Passes"
   SULFURAS = "Sulfuras"
+  CONJURED = "Conjured"
   
   MIN_QUALITY = 0
   MAX_QUALITY = 50
@@ -15,7 +16,7 @@ class GildedRose
   end
 
   def is_normal item
-    item.name != AGED_BRIE and item.name!=BACKSTAGE_PASSES  and !is_legendery item
+    item.name != AGED_BRIE and item.name!=BACKSTAGE_PASSES and item.name != CONJURED and !is_legendery item
   end 
   
   def increase_quality item, value
@@ -37,9 +38,16 @@ class GildedRose
   def degrade_quality_according_to_expiry item
     if item.sell_in <=0 and is_normal item
       decrease_quality item, 2
-      else
-        decrease_quality item, 1
-      
+    else
+      decrease_quality item, 1      
+    end
+  end
+
+  def degrade_quality_of_conjured item
+    if item.sell_in <=0
+      item.quality -=4
+    else
+      item.quality-=2
     end
   end
 
@@ -63,9 +71,11 @@ class GildedRose
         increase_quality item, 1
       elsif item.name == BACKSTAGE_PASSES
         degrade_quality_of_backstage_passes item
-      elsif !is_legendery item
+      elsif item.name == CONJURED
+        degrade_quality_of_conjured item
+      elsif !is_legendery item 
         item.sell_in -=1
-        degrade_quality_according_to_expiry item
+        degrade_quality_according_to_expiry item      
       end
     end
   end
