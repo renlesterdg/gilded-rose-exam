@@ -158,5 +158,19 @@ describe GildedRose do
         expect(items[0].quality).to eq(9)
       end
     end
+
+    context "when the item is 'Conjured'" do
+      let (:name) {"Conjured"}
+      it "quality degrades twice as fast as normal items" do 
+        expect(item.quality).to eq(8) 
+      end
+
+      context "when the Conjured item is expired" do
+        let (:initial_sell_in) {-1}
+        it "quality degrades twice as fast than regular" do
+          expect(item.quality).to eq(6)
+        end
+      end
+    end
   end
 end

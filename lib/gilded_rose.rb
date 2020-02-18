@@ -7,6 +7,7 @@ class GildedRose
   Aged_Brie = "Aged Brie"
   Backstage_Pass = "Backstage passes to a TAFKAL80ETC concert"
   Sulfuras = "Sulfuras, Hand of Ragnaros"
+  Conjured = "Conjured"
 
   def legendary_Item(item)
     item.name == Sulfuras
@@ -60,6 +61,17 @@ class GildedRose
         item.sell_in -= 1
   end
 
+  def update_Conjured_Item(item)
+    if item.quality > 0
+      if item.sell_in < 0
+        decrement_Quality(item, 4)
+      else
+        decrement_Quality(item, 2)
+      end
+    end
+  item.sell_in -= 1
+  end
+
   def update_quality
     @items.each do |item|
       case item.name
@@ -69,6 +81,8 @@ class GildedRose
         update_Backstage_Passes(item)
       when Sulfuras
         # do nothing
+      when Conjured
+        update_Conjured_Item(item)
       else
         update_Normal_Item(item)
       end
