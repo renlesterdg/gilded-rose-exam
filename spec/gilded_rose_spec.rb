@@ -159,6 +159,7 @@ describe GildedRose do
       end
     end
 
+    # unit test for Conjured items starts here
     context "when the item is 'Conjured'" do
       let (:name) {"Conjured"}
       it "quality degrades twice as fast as normal items" do 
