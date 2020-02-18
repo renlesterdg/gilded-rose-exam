@@ -9,10 +9,6 @@ class GildedRose
   Sulfuras = "Sulfuras, Hand of Ragnaros"
   Conjured = "Conjured"
 
-  def legendary_Item(item)
-    item.name == Sulfuras
-  end
-
   def normal_Item(item)
     item.name != Aged_Brie && Backstage_Pass && Sulfuras
   end
