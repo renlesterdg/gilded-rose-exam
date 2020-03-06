@@ -38,6 +38,15 @@ describe GildedRose do
       end
     end
 
+    context "when item name is 'Conjured'" do
+      let(:name) { 'Conjured' }
+
+      it "lowers the quality by 2" do
+        expect(item.quality).to eq 8
+      end
+    end 
+      
+
     context "when item name is 'Aged Brie'" do
       let(:name) { 'Aged Brie' }
 

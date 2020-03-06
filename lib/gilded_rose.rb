@@ -5,13 +5,19 @@ class GildedRose
 
   def update_quality
     @items.each do |item|
-      if item.name != "Aged Brie" && item.name != "Backstage passes to a TAFKAL80ETC concert"
+      if item.name != "Aged Brie" && item.name != "Backstage passes to a TAFKAL80ETC concert" && item.name !="Conjured" 
         if item.quality > 0
-          if item.name != "Sulfuras, Hand of Ragnaros"
-            item.quality = item.quality - 1
+          if item.name !="Sulfuras, Hand of Ragnaros"
+            item.quality = item.quality - 1 
           end
         end
-      else
+      elsif
+        if item.quality > 0 
+          if item.name == "Conjured"
+            item.quality = item.quality - 2
+          end
+        end
+      elsif
         if item.quality < 50
           item.quality = item.quality + 1
           if item.name == "Backstage passes to a TAFKAL80ETC concert"
@@ -37,6 +43,10 @@ class GildedRose
             if item.quality > 0
               if item.name != "Sulfuras, Hand of Ragnaros"
                 item.quality = item.quality - 1
+              elsif
+                if item.name == "Conjured"
+                  item.quality = item.quality  - 2
+                end
               end
             end
           else
@@ -51,3 +61,4 @@ class GildedRose
     end
   end
 end
+
