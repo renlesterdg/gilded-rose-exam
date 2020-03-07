@@ -1,3 +1,5 @@
+#require_relative '../../CY_Project/fave'
+#require_relative '../testing'
 require_relative '../lib/gilded_rose'
 require_relative '../lib/item'
 
@@ -85,6 +87,14 @@ describe GildedRose do
     context "when item name is 'Backstage passes to a TAFKAL80ETC concert'" do
       let(:name) { 'Backstage passes to a TAFKAL80ETC concert' }
 
+      context "and sell in is 12 days" do
+        let(:initial_sell_in) { 11 }
+
+        it "increases quality by 1" do
+          expect(item.quality).to eq 11
+        end
+      end
+
       context "and sell in is 11 days" do
         let(:initial_sell_in) { 11 }
 
@@ -117,6 +127,22 @@ describe GildedRose do
         end
       end
 
+      context "and sell in is 8 days" do
+        let(:initial_sell_in) { 9 }
+
+        it "increases quality by 2" do
+          expect(item.quality).to eq 12
+        end
+      end
+
+      context "and sell in is 7 days" do
+        let(:initial_sell_in) { 9 }
+
+        it "increases quality by 2" do
+          expect(item.quality).to eq 12
+        end
+      end
+
       context "and sell in is 6 days" do
         let(:initial_sell_in) { 10 }
 
@@ -132,6 +158,18 @@ describe GildedRose do
       end
 
       context "and sell in is 4 days" do
+        it "increases quality by 3" do
+          expect(item.quality).to eq 13
+        end
+      end
+
+      context "and sell in is 3 days" do
+        it "increases quality by 3" do
+          expect(item.quality).to eq 13
+        end
+      end
+
+      context "and sell in is 2 days" do
         it "increases quality by 3" do
           expect(item.quality).to eq 13
         end
