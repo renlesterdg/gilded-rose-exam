@@ -4,8 +4,8 @@
 
 1. Install Ruby
 2. Install Bundler `gem install bundler`
-3. Clone this repository using your github account.
-4. Create a local branch from your clone.
+3. Fork this repository using your github account.
+4. Create a feature branch from your fork.
 5. Run `bundle install` This will install all dependencies for our test runner, rspec.
 6. Run `bundle exec rspec` or `rake` This will run all unit tests, Please ensure all tests are green.
 
